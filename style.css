@@ -34,7 +34,6 @@ html{
 
 html, body {
     overflow-x: hidden;
-    overflow-y: auto; /* Allows vertical scrolling if needed */
 }
 
 /* ----- CHANGE THE SCROLL BAR DESIGN ----- */
