@@ -24,11 +24,17 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
+    overflow-x: hidden;
 }
 
 /* ----- SMOOTH SCROLL ----- */
 html{
     scroll-behavior: smooth;
+}
+
+html, body {
+    overflow-x: hidden;
+    overflow-y: auto; /* Allows vertical scrolling if needed */
 }
 
 /* ----- CHANGE THE SCROLL BAR DESIGN ----- */
@@ -561,7 +567,7 @@ footer{
         left: 0;
     }
     .nav-menu{
-        position: fixed;
+        position: fixed;    
         top: 80px;
         left: -100%;
         flex-direction: column;
@@ -647,3 +653,4 @@ footer{
         width: 100%;
     }
 }
+
