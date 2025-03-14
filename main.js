@@ -1,117 +1,80 @@
 /* ----- NAVIGATION BAR FUNCTION ----- */
-function myMenuFunction(){
+function myMenuFunction() {
   var menuBtn = document.getElementById("myNavMenu");
-
-  if(menuBtn.className === "nav-menu"){
-    menuBtn.className += " responsive";
-  } else {
-    menuBtn.className = "nav-menu";
-  }
+  menuBtn.classList.toggle("responsive");
 }
 
-/* ----- ADD SHADOW ON NAVIGATION BAR WHILE SCROLLING ----- */
-window.onscroll = function() {headerShadow()};
+// Close menu when a link is clicked (for mobile)
+document.querySelectorAll(".nav-menu a").forEach(link => {
+  link.addEventListener("click", () => {
+    document.getElementById("myNavMenu").classList.remove("responsive");
+  });
+});
+
+/* ----- ADD SHADOW & RESIZE NAVIGATION BAR WHILE SCROLLING ----- */
+window.addEventListener("scroll", headerShadow);
 
 function headerShadow() {
-  const navHeader =document.getElementById("header");
+  const navHeader = document.getElementById("header");
+  const isScrolled = window.scrollY > 50;
 
-  if (document.body.scrollTop > 50 || document.documentElement.scrollTop >  50) {
-
-    navHeader.style.boxShadow = "0 1px 6px rgba(0, 0, 0, 0.1)";
-    navHeader.style.height = "70px";
-    navHeader.style.lineHeight = "70px";
-
-  } else {
-
-    navHeader.style.boxShadow = "none";
-    navHeader.style.height = "90px";
-    navHeader.style.lineHeight = "90px";
-
-  }
+  navHeader.style.boxShadow = isScrolled ? "0 1px 6px rgba(0, 0, 0, 0.1)" : "none";
+  navHeader.style.height = isScrolled ? "70px" : "90px";
+  navHeader.style.lineHeight = isScrolled ? "70px" : "90px";
 }
-
 
 /* ----- TYPING EFFECT ----- */
-var typingEffect = new Typed(".typedText",{
-  strings : ["UI/UX Designer","Full Stack Web Developer"],
-  loop : true,
-  typeSpeed : 100, 
-  backSpeed : 80,
-  backDelay : 2000
-})
+var typingEffect = new Typed(".typedText", {
+  strings: ["UI/UX Designer", "Front-End Web Developer"],
+  loop: true,
+  typeSpeed: 100,
+  backSpeed: 80,
+  backDelay: 2000
+});
 
-
-/* ----- ## -- SCROLL REVEAL ANIMATION -- ## ----- */
+/* ----- SCROLL REVEAL ANIMATION ----- */
 const sr = ScrollReveal({
-      origin: 'top',
-      distance: '80px',
-      duration: 2000,
-      reset: true     
-})
+  origin: "top",
+  distance: "80px",
+  duration: 2000,
+  reset: false  // Prevents constant resets for better UX
+});
 
-/* -- HOME -- */
-sr.reveal('.featured-text-card',{})
-sr.reveal('.featured-name',{delay: 100})
-sr.reveal('.featured-text-info',{delay: 200})
-sr.reveal('.featured-text-btn',{delay: 200})
-sr.reveal('.social_icons',{delay: 200})
-sr.reveal('.featured-image',{delay: 300})
+sr.reveal(".featured-text-card");
+sr.reveal(".featured-name", { delay: 100 });
+sr.reveal(".featured-text-info", { delay: 200 });
+sr.reveal(".featured-text-btn", { delay: 200 });
+sr.reveal(".social_icons", { delay: 200 });
+sr.reveal(".featured-image", { delay: 300 });
+sr.reveal(".project-box", { interval: 200 });
+sr.reveal(".top-header");
 
-
-/* -- PROJECT BOX -- */
-sr.reveal('.project-box',{interval: 200})
-
-/* -- HEADINGS -- */
-sr.reveal('.top-header',{})
-
-/* ----- ## -- SCROLL REVEAL LEFT_RIGHT ANIMATION -- ## ----- */
-
-/* -- ABOUT INFO & CONTACT INFO -- */
-const srLeft = ScrollReveal({
-origin: 'left',
-distance: '80px',
-duration: 2000,
-reset: true
-})
-
-srLeft.reveal('.about-info',{delay: 100})
-srLeft.reveal('.contact-info',{delay: 100})
-
-/* -- ABOUT SKILLS & FORM BOX -- */
-const srRight = ScrollReveal({
-origin: 'right',
-distance: '80px',
-duration: 2000,
-reset: true
-})
-
-srRight.reveal('.skills-box',{delay: 100})
-srRight.reveal('.form-control',{delay: 100})
-
-
+/* -- ABOUT & CONTACT INFO -- */
+ScrollReveal().reveal(".about-info, .contact-info", { origin: "left", distance: "80px", duration: 2000 });
+ScrollReveal().reveal(".skills-box, .form-control", { origin: "right", distance: "80px", duration: 2000 });
 
 /* ----- CHANGE ACTIVE LINK ----- */
-
-const sections = document.querySelectorAll('section[id]')
+const sections = document.querySelectorAll("section[id]");
 
 function scrollActive() {
-const scrollY = window.scrollY;
+  const scrollY = window.scrollY;
 
-sections.forEach(current =>{
-  const sectionHeight = current.offsetHeight,
-      sectionTop = current.offsetTop - 50,
-    sectionId = current.getAttribute('id')
+  sections.forEach(section => {
+    const sectionHeight = section.offsetHeight;
+    const sectionTop = section.offsetTop - 50;
+    const sectionId = section.getAttribute("id");
 
-  if(scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) { 
-
-      document.querySelector('.nav-menu a[href*=' + sectionId + ']').classList.add('active-link')
-
-  }  else {
-
-    document.querySelector('.nav-menu a[href*=' + sectionId + ']').classList.remove('active-link')
-
-  }
-})
+    try {
+      const navLink = document.querySelector(`.nav-menu a[href*='${sectionId}']`);
+      if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+        navLink.classList.add("active-link");
+      } else {
+        navLink.classList.remove("active-link");
+      }
+    } catch (error) {
+      console.warn("Navigation link missing for section:", sectionId);
+    }
+  });
 }
 
-window.addEventListener('scroll', scrollActive)
+window.addEventListener("scroll", scrollActive);
