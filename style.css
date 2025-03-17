@@ -329,7 +329,6 @@ h3{
     text-align: center;
     font-size: 15px;
     color: #777;
-    padding: 20px;
 }
 .about-btn button{
     position: absolute;
@@ -405,7 +404,7 @@ h3{
     font-size: 14px;
     color: #777;
     text-align: center;
-    padding: 0 10px;
+    padding: 20px 10px;
 }
 
 .project-box .btn-container {
